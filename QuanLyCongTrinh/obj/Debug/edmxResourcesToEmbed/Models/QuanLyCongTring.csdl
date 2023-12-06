@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QlyCongTrinhModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="CongTrinh">
+    <Key>
+      <PropertyRef Name="MaCT" />
+    </Key>
+    <Property Name="MaCT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenCT" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MaTaiKhoan" Type="Int32" Nullable="false" />
+    <Property Name="NgayBatDau" Type="DateTime" Precision="0" />
+    <Property Name="NgayKetThuc" Type="DateTime" Precision="0" />
+    <Property Name="ChuThau" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="ThoChinh" Type="Int32" />
+    <Property Name="ThoPhu" Type="Int32" />
+    <Property Name="SoDu" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="TaiKhoan" Relationship="Self.Fk_CongTrinh_Tk" FromRole="CongTrinh" ToRole="TaiKhoan" />
+    <NavigationProperty Name="NganSaches" Relationship="Self.FK_NganSach_Ct" FromRole="CongTrinh" ToRole="NganSach" />
+    <NavigationProperty Name="PhanCongs" Relationship="Self.FKPhanCong402207" FromRole="CongTrinh" ToRole="PhanCong" />
+    <NavigationProperty Name="TienDoes" Relationship="Self.FKTienDo163949" FromRole="CongTrinh" ToRole="TienDo" />
+    <NavigationProperty Name="VatLieux" Relationship="Self.FKVatLieu670170" FromRole="CongTrinh" ToRole="VatLieu" />
+  </EntityType>
+  <EntityType Name="NganSach">
+    <Key>
+      <PropertyRef Name="MaNganSach" />
+      <PropertyRef Name="MaCT" />
+    </Key>
+    <Property Name="MaNganSach" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NganSachBD" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="MaCT" Type="Int32" Nullable="false" />
+    <Property Name="TrangThai" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="CongTrinh" Relationship="Self.FK_NganSach_Ct" FromRole="NganSach" ToRole="CongTrinh" />
+  </EntityType>
+  <EntityType Name="NhanVien">
+    <Key>
+      <PropertyRef Name="MaNV" />
+    </Key>
+    <Property Name="MaNV" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenNV" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Luong" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="MaVT" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="ViTri" Relationship="Self.FK_nv_vitri" FromRole="NhanVien" ToRole="ViTri" />
+    <NavigationProperty Name="PhanCongs" Relationship="Self.FKPhanCong114008" FromRole="NhanVien" ToRole="PhanCong" />
+  </EntityType>
+  <EntityType Name="PhanCong">
+    <Key>
+      <PropertyRef Name="MaCT" />
+      <PropertyRef Name="MaNV" />
+    </Key>
+    <Property Name="MaCT" Type="Int32" Nullable="false" />
+    <Property Name="MaNV" Type="Int32" Nullable="false" />
+    <Property Name="NgayThamGia" Type="DateTime" Precision="0" />
+    <Property Name="NgayKetThuc" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="CongTrinh" Relationship="Self.FKPhanCong402207" FromRole="PhanCong" ToRole="CongTrinh" />
+    <NavigationProperty Name="NhanVien" Relationship="Self.FKPhanCong114008" FromRole="PhanCong" ToRole="NhanVien" />
+  </EntityType>
+  <EntityType Name="Quyen">
+    <Key>
+      <PropertyRef Name="IdQuyen" />
+    </Key>
+    <Property Name="IdQuyen" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenQuyen" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="TaiKhoans" Relationship="Self.FK_TaiKhoan_Quyen" FromRole="Quyen" ToRole="TaiKhoan" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TaiKhoan">
+    <Key>
+      <PropertyRef Name="MaTaiKhoan" />
+    </Key>
+    <Property Name="MaTaiKhoan" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenTaiKhoan" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MatKhau" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TenNguoiDung" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IdQuyen" Type="Int32" Nullable="false" />
+    <Property Name="ImageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CongTrinhs" Relationship="Self.Fk_CongTrinh_Tk" FromRole="TaiKhoan" ToRole="CongTrinh" />
+    <NavigationProperty Name="Quyen" Relationship="Self.FK_TaiKhoan_Quyen" FromRole="TaiKhoan" ToRole="Quyen" />
+  </EntityType>
+  <EntityType Name="TienDo">
+    <Key>
+      <PropertyRef Name="MaCT" />
+      <PropertyRef Name="MaTienDo" />
+    </Key>
+    <Property Name="MaCT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MaTienDo" Type="Int32" Nullable="false" />
+    <Property Name="TinhTrang" Type="Byte" Nullable="false" />
+    <NavigationProperty Name="CongTrinh" Relationship="Self.FKTienDo163949" FromRole="TienDo" ToRole="CongTrinh" />
+  </EntityType>
+  <EntityType Name="VatLieu">
+    <Key>
+      <PropertyRef Name="MaVL" />
+      <PropertyRef Name="MaCT" />
+    </Key>
+    <Property Name="MaVL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MaCT" Type="Int32" Nullable="false" />
+    <Property Name="NgayCungCap" Type="DateTime" Precision="0" />
+    <Property Name="SoLuong" Type="Int32" />
+    <Property Name="DonGia" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="ThanhTien" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="CongTrinh" Relationship="Self.FKVatLieu670170" FromRole="VatLieu" ToRole="CongTrinh" />
+  </EntityType>
+  <EntityType Name="ViTri">
+    <Key>
+      <PropertyRef Name="MaVT" />
+    </Key>
+    <Property Name="MaVT" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TenVT" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="NhanViens" Relationship="Self.FK_nv_vitri" FromRole="ViTri" ToRole="NhanVien" />
+  </EntityType>
+  <Association Name="Fk_CongTrinh_Tk">
+    <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="1" />
+    <End Role="CongTrinh" Type="Self.CongTrinh" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TaiKhoan">
+        <PropertyRef Name="MaTaiKhoan" />
+      </Principal>
+      <Dependent Role="CongTrinh">
+        <PropertyRef Name="MaTaiKhoan" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NganSach_Ct">
+    <End Role="CongTrinh" Type="Self.CongTrinh" Multiplicity="1" />
+    <End Role="NganSach" Type="Self.NganSach" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CongTrinh">
+        <PropertyRef Name="MaCT" />
+      </Principal>
+      <Dependent Role="NganSach">
+        <PropertyRef Name="MaCT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FKPhanCong402207">
+    <End Role="CongTrinh" Type="Self.CongTrinh" Multiplicity="1" />
+    <End Role="PhanCong" Type="Self.PhanCong" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CongTrinh">
+        <PropertyRef Name="MaCT" />
+      </Principal>
+      <Dependent Role="PhanCong">
+        <PropertyRef Name="MaCT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FKTienDo163949">
+    <End Role="CongTrinh" Type="Self.CongTrinh" Multiplicity="1" />
+    <End Role="TienDo" Type="Self.TienDo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CongTrinh">
+        <PropertyRef Name="MaCT" />
+      </Principal>
+      <Dependent Role="TienDo">
+        <PropertyRef Name="MaCT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FKVatLieu670170">
+    <End Role="CongTrinh" Type="Self.CongTrinh" Multiplicity="1" />
+    <End Role="VatLieu" Type="Self.VatLieu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CongTrinh">
+        <PropertyRef Name="MaCT" />
+      </Principal>
+      <Dependent Role="VatLieu">
+        <PropertyRef Name="MaCT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_nv_vitri">
+    <End Role="ViTri" Type="Self.ViTri" Multiplicity="1" />
+    <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ViTri">
+        <PropertyRef Name="MaVT" />
+      </Principal>
+      <Dependent Role="NhanVien">
+        <PropertyRef Name="MaVT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FKPhanCong114008">
+    <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="1" />
+    <End Role="PhanCong" Type="Self.PhanCong" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NhanVien">
+        <PropertyRef Name="MaNV" />
+      </Principal>
+      <Dependent Role="PhanCong">
+        <PropertyRef Name="MaNV" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TaiKhoan_Quyen">
+    <End Role="Quyen" Type="Self.Quyen" Multiplicity="1" />
+    <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Quyen">
+        <PropertyRef Name="IdQuyen" />
+      </Principal>
+      <Dependent Role="TaiKhoan">
+        <PropertyRef Name="IdQuyen" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="QlyCongTrinhEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CongTrinhs" EntityType="Self.CongTrinh" />
+    <EntitySet Name="NganSaches" EntityType="Self.NganSach" />
+    <EntitySet Name="NhanViens" EntityType="Self.NhanVien" />
+    <EntitySet Name="PhanCongs" EntityType="Self.PhanCong" />
+    <EntitySet Name="Quyens" EntityType="Self.Quyen" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="TaiKhoans" EntityType="Self.TaiKhoan" />
+    <EntitySet Name="TienDoes" EntityType="Self.TienDo" />
+    <EntitySet Name="VatLieux" EntityType="Self.VatLieu" />
+    <EntitySet Name="ViTris" EntityType="Self.ViTri" />
+    <AssociationSet Name="Fk_CongTrinh_Tk" Association="Self.Fk_CongTrinh_Tk">
+      <End Role="TaiKhoan" EntitySet="TaiKhoans" />
+      <End Role="CongTrinh" EntitySet="CongTrinhs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NganSach_Ct" Association="Self.FK_NganSach_Ct">
+      <End Role="CongTrinh" EntitySet="CongTrinhs" />
+      <End Role="NganSach" EntitySet="NganSaches" />
+    </AssociationSet>
+    <AssociationSet Name="FKPhanCong402207" Association="Self.FKPhanCong402207">
+      <End Role="CongTrinh" EntitySet="CongTrinhs" />
+      <End Role="PhanCong" EntitySet="PhanCongs" />
+    </AssociationSet>
+    <AssociationSet Name="FKTienDo163949" Association="Self.FKTienDo163949">
+      <End Role="CongTrinh" EntitySet="CongTrinhs" />
+      <End Role="TienDo" EntitySet="TienDoes" />
+    </AssociationSet>
+    <AssociationSet Name="FKVatLieu670170" Association="Self.FKVatLieu670170">
+      <End Role="CongTrinh" EntitySet="CongTrinhs" />
+      <End Role="VatLieu" EntitySet="VatLieux" />
+    </AssociationSet>
+    <AssociationSet Name="FK_nv_vitri" Association="Self.FK_nv_vitri">
+      <End Role="ViTri" EntitySet="ViTris" />
+      <End Role="NhanVien" EntitySet="NhanViens" />
+    </AssociationSet>
+    <AssociationSet Name="FKPhanCong114008" Association="Self.FKPhanCong114008">
+      <End Role="NhanVien" EntitySet="NhanViens" />
+      <End Role="PhanCong" EntitySet="PhanCongs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TaiKhoan_Quyen" Association="Self.FK_TaiKhoan_Quyen">
+      <End Role="Quyen" EntitySet="Quyens" />
+      <End Role="TaiKhoan" EntitySet="TaiKhoans" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
